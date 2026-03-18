@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hey 🙂</title>
+
+<style>
+body{
+    margin:0;
+    padding:0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(-45deg,#a1c4fd,#c2e9fb,#d4fc79,#96e6a1);
+    background-size: 400% 400%;
+    animation: gradient 10s ease infinite;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    overflow:hidden;
+}
+
+@keyframes gradient{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+.container{
+    text-align:center;
+    padding:20px;
+}
+
+h1{
+    color:#1e293b;
+    font-size:38px;
+}
+
+.typing{
+    color:#334155;
+    font-size:18px;
+    border-right:2px solid #334155;
+    display:inline-block;
+    padding-right:5px;
+    white-space:nowrap;
+    overflow:hidden;
+}
+
+.teddy{
+    font-size:110px;
+    cursor:pointer;
+    transition: transform 0.3s;
+}
+
+.teddy:hover{
+    transform: scale(1.15);
+}
+
+.buttons{
+    margin-top:20px;
+}
+
+button{
+    padding:10px 18px;
+    margin:8px;
+    border:none;
+    border-radius:20px;
+    font-size:15px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.yes{
+    background:#60a5fa;
+    color:white;
+}
+
+.no{
+    background:#f87171;
+    color:white;
+    position:relative;
+}
+
+.music{
+    background:#34d399;
+    color:white;
+}
+
+button:hover{
+    transform:scale(1.08);
+}
+
+.heart{
+    position:absolute;
+    color:#fb7185;
+    font-size:18px;
+    animation: float 3s linear infinite;
+}
+
+@keyframes float{
+    0%{ transform:translateY(0); opacity:1; }
+    100%{ transform:translateY(-220px); opacity:0; }
+}
+
+.message-box{
+    margin-top:15px;
+    font-size:16px;
+    color:#1e293b;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Hey  Chutki ❤️ im sorry</h1>
+    <p class="typing" id="text"></p>
+
+    <div class="teddy" onclick="showLove()">🧸</div>
+
+    <div class="message-box" id="msg"></div>
+
+    <div class="buttons">
+        <button class="yes" onclick="forgive()">Okay 🙂</button>
+        <button class="no" onclick="funnyNo(this)">Still Angry 😅</button>
+        <button class="music" onclick="toggleMusic(this)">🎵 Play Music</button>
+    </div>
+</div>
+
+<audio id="bgMusic">
+  <source src="singari_chinnadana.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+
+// Typing text
+let message = "I messed up a little... can we be okay again? 🙂";
+let i = 0;
+
+function typing(){
+    if(i < message.length){
+        document.getElementById("text").innerHTML += message.charAt(i);
+        i++;
+        setTimeout(typing, 50);
+    }
+}
+typing();
+
+
+// Teddy messages
+let lines = [
+    "I brought snacks 🍫",
+    "Peace? 🤝",
+    "Don't stay mad 😢",
+    "You mean a lot to me 🙂"
+];
+
+// Teddy click → hearts + message
+function showLove(){
+    for(let i=0;i<15;i++){
+        let heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random()*100 + "vw";
+        heart.style.top = "80vh";
+        document.body.appendChild(heart);
+
+        setTimeout(()=>{ heart.remove(); },3000);
+    }
+
+    let random = lines[Math.floor(Math.random()*lines.length)];
+    document.getElementById("msg").innerText = random;
+}
+
+
+// Forgive screen
+function forgive(){
+    document.body.innerHTML = `
+    <div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#dbeafe;color:#1e293b;text-align:center;flex-direction:column;">
+        <h1>Thank you 🙂</h1>
+        <p>Let's just be happy again 🤍</p>
+        <div style="font-size:100px">🧸💙</div>
+    </div>`;
+}
+
+
+// Moving + funny angry button
+let noCount = 0;
+
+function funnyNo(btn){
+    let responses = [
+        "Okay I deserve that 😅",
+        "Retry please 🙏",
+        "Still buffering... 😭",
+        "I'll wait 🙂"
+    ];
+
+    document.getElementById("msg").innerText = responses[noCount % responses.length];
+    noCount++;
+
+    // move button
+    btn.style.position = "absolute";
+    btn.style.top = Math.random()*80 + "vh";
+    btn.style.left = Math.random()*80 + "vw";
+}
+
+
+// Music control
+let playing = false;
+
+function toggleMusic(btn){
+    let music = document.getElementById("bgMusic");
+
+    if(!playing){
+        music.play();
+        btn.innerText = "⏸ Pause Music";
+        playing = true;
+    } else {
+        music.pause();
+        btn.innerText = "🎵 Play Music";
+        playing = false;
+    }
+}
+
+</script>
+
+</body>
+</html>
